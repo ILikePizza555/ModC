@@ -54,7 +54,7 @@ class Module():
         rv = f"MODULE {self.identifier}\n"
 
         for n in self.functions:
-            rv.append("\t" + n.__repr__())
+            rv += "\t" + n.__repr__()
 
         return rv
 
@@ -95,7 +95,7 @@ class Function():
         return cls(ret_type.value, iden.value, nodes)
 
     def __init__(self, ret_type: str, identifier: str, expressions: List["Expression"]):
-        self.ret_type = type
+        self.ret_type = ret_type
         self.identifier = identifier
         self.expressions = expressions
 
@@ -103,7 +103,7 @@ class Function():
         rv = f"FUN {self.identifier} () -> {self.ret_type}\n"
 
         for e in self.expressions:
-            rv.append("\t" + e.__repr__())
+            rv += "\t" + e.__repr__()
 
         return rv
 

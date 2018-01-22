@@ -16,7 +16,7 @@ class Program():
     Represents the program node for our AST.
     This generally will be the root node.
     """
-    def __init__(self, modules: Union[List[Module], Module]):
+    def __init__(self, modules: List["Module"]):
         self.modules = modules
 
 class Module():
@@ -25,7 +25,7 @@ class Module():
     This makes up Programs.
     """
     @classmethod
-    def parse(cls, tokens: List[TokenMatch]) -> Module:
+    def parse(cls, tokens: List[TokenMatch]) -> "Module":
         """Parses a single module from the list of tokens."""
 
         decl = tokens.pop()
@@ -43,7 +43,7 @@ class Module():
 
         return cls(iden.value, nodes)
 
-    def __init__(self, identifier: str, functions: Union[List[Function], Function]):
+    def __init__(self, identifier: str, functions: List["Function"]):
         self.identifier = identifier
         self.functions = functions
 
@@ -61,7 +61,7 @@ class Function():
     This is one of the objects that will make up Modules
     """
     @classmethod
-    def parse(cls, tokens: List[TokenMatch]) -> Function:
+    def parse(cls, tokens: List[TokenMatch]) -> "Function":
         """Parses a single Function from the list tokens"""
         ret_type = tokens.pop()
         if ret_type.type != Token.KEYWORD_INT:
@@ -89,7 +89,7 @@ class Function():
         
         return cls(ret_type.value, iden.value, nodes)
 
-    def __init__(self, ret_type: str, identifier: str, expressions: List[Expression]):
+    def __init__(self, ret_type: str, identifier: str, expressions: List["Expression"]):
         self.ret_type = type
         self.identifier = identifier
         self.expressions = expressions
@@ -104,7 +104,7 @@ class Function():
 
 class Expression():
     @classmethod
-    def parse(cls, tokens: List[TokenMatch]) -> Expression:
+    def parse(cls, tokens: List[TokenMatch]) -> "Expression":
         """Parses a single expression from the token list."""
         keyword = tokens.pop()
         

@@ -1,7 +1,7 @@
 """Defines the parser, which converts the tokens into an AST"""
 from collections import namedtuple
 from typing import List, Union
-from lex import Token, TokenMatch
+from .lex import Token, TokenMatch
 
 
 class ParserError(Exception):

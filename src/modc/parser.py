@@ -36,6 +36,9 @@ class Module():
         if iden.type != Token.IDENTIFIER:
             raise ParserError("Expected identifier after 'module'.")
 
+        if tokens.pop().type != Token.LINE_END:
+            raise ParserError("Expected ';'")
+
         nodes: List[Function] = []
 
         while tokens:
@@ -107,7 +110,7 @@ class Expression():
     def parse(cls, tokens: List[TokenMatch]) -> "Expression":
         """Parses a single expression from the token list."""
         keyword = tokens.pop()
-        
+
         if keyword.type == Token.KEYWORD_RETURN:
             val = tokens.pop()
             if val.type != Token.IDENTIFIER or val.type != Token.INTEGER_LITERAL:
@@ -115,7 +118,7 @@ class Expression():
 
             if tokens.pop().type != Token.LINE_END:
                 raise ParserError("Expected ';'")
-            
+
             return cls((keyword.value, val.value))
 
         raise ParserError("Unexpected expression.")

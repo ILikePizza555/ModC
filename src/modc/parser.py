@@ -84,11 +84,13 @@ class Function():
             raise ParserError("Expected '{")
 
         nodes: List[Expression] = []
-        while tokens[0].type != Token.CLOSE_BRACE:
+        while tokens[-1].type != Token.CLOSE_BRACE:
             if not tokens:
                 raise ParserError("Reached EOF before '}'.")
 
             nodes.append(Expression.parse(tokens))
+
+        tokens.pop()
         
         return cls(ret_type.value, iden.value, nodes)
 
@@ -113,7 +115,7 @@ class Expression():
 
         if keyword.type == Token.KEYWORD_RETURN:
             val = tokens.pop()
-            if val.type != Token.IDENTIFIER or val.type != Token.INTEGER_LITERAL:
+            if val.type != Token.IDENTIFIER and val.type != Token.INTEGER_LITERAL:
                 raise ParserError("Expected an identifier or literal.")
 
             if tokens.pop().type != Token.LINE_END:
